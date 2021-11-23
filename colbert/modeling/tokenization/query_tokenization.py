@@ -5,8 +5,10 @@ from colbert.modeling.tokenization.utils import _split_into_batches
 
 
 class QueryTokenizer():
-    def __init__(self, query_maxlen):
-        self.tok = BertTokenizerFast.from_pretrained('bert-base-uncased')
+    def __init__(self, model_name, query_maxlen):
+        # TODO: hard coded :(
+        self.tok = BertTokenizerFast.from_pretrained(model_name)
+        print(f"Using {model_name} tokenizer as the QueryTokenizer!")
         self.query_maxlen = query_maxlen
 
         self.Q_marker_token, self.Q_marker_token_id = '[Q]', self.tok.convert_tokens_to_ids('[unused0]')
@@ -14,7 +16,9 @@ class QueryTokenizer():
         self.sep_token, self.sep_token_id = self.tok.sep_token, self.tok.sep_token_id
         self.mask_token, self.mask_token_id = self.tok.mask_token, self.tok.mask_token_id
 
-        assert self.Q_marker_token_id == 1 and self.mask_token_id == 103
+        # print(f"{self.Q_marker_token}, {self.Q_marker_token_id}, {self.mask_token_id}")
+        # TODO: removed assertion
+        # assert self.Q_marker_token_id == 1 and self.mask_token_id == 103
 
     def tokenize(self, batch_text, add_special_tokens=False):
         assert type(batch_text) in [list, tuple], (type(batch_text))
