@@ -106,13 +106,15 @@ def load_topK_pids(topK_path, qrels):
 
             assert len(rest) in [1, 2, 3]
 
-            if len(rest) > 1:
-                *_, label = rest
-                label = int(label)
-                assert label in [0, 1]
+            # if len(rest) > 1:
+            #     *_, label = rest
+            #     # TODO: Fix?
+            #     if : continue
+            #     label = int(label)
+            #     assert label in [0, 1]
 
-                if label >= 1:
-                    topK_positives[qid].append(pid)
+            #     if label >= 1:
+            #         topK_positives[qid].append(pid)
 
         print()
 

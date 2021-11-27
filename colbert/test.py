@@ -29,7 +29,7 @@ def main():
 
         if args.collection or args.queries:
             assert args.collection and args.queries
-
+            # Neste caso são carregados apenas os IDs?
             args.queries = load_queries(args.queries)
             args.collection = load_collection(args.collection)
             args.topK_pids, args.qrels = load_topK_pids(args.topK, args.qrels)
@@ -41,7 +41,7 @@ def main():
             "Short-circuiting (i.e., applying minimal computation to queries with no positives in the re-ranked set) " \
             "can only be applied if qrels is provided."
 
-        evaluate_recall(args.qrels, args.queries, args.topK_pids)
+        # evaluate_recall(args.qrels, args.queries, args.topK_pids)
         evaluate(args)
 
 
