@@ -35,13 +35,14 @@ def main():
             args.topK_pids, args.qrels = load_topK_pids(args.topK, args.qrels)
 
         else:
+            print("Using second mode: qrels + topk")
             args.queries, args.topK_docs, args.topK_pids = load_topK(args.topK)
 
         assert (not args.shortcircuit) or args.qrels, \
             "Short-circuiting (i.e., applying minimal computation to queries with no positives in the re-ranked set) " \
             "can only be applied if qrels is provided."
 
-        # evaluate_recall(args.qrels, args.queries, args.topK_pids)
+        evaluate_recall(args.qrels, args.queries, args.topK_pids)
         evaluate(args)
 
 

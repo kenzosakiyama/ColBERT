@@ -42,7 +42,7 @@ def train(args):
 
     # tokenizer model must match the base model
     colbert = ColBERT.from_pretrained(args.model_name,
-                                      tokenizer=args.model_name,
+                                      model_name=args.model_name,
                                       query_maxlen=args.query_maxlen,
                                       doc_maxlen=args.doc_maxlen,
                                       dim=args.dim,

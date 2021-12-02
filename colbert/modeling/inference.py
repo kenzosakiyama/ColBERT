@@ -11,9 +11,9 @@ class ModelInference():
         assert colbert.training is False
 
         self.colbert = colbert
-        # TODO: hardcoded por enquanto. Talvez o colbert acima tenha um atributo que indique o modelo de ling/tokenizador
-        self.query_tokenizer = QueryTokenizer("neuralmind/bert-base-portuguese-cased", colbert.query_maxlen)
-        self.doc_tokenizer = DocTokenizer("neuralmind/bert-base-portuguese-cased", colbert.doc_maxlen)
+        
+        self.query_tokenizer = QueryTokenizer(colbert.model_name, colbert.query_maxlen)
+        self.doc_tokenizer = DocTokenizer(colbert.model_name, colbert.doc_maxlen)
 
         self.amp_manager = MixedPrecisionManager(amp)
 
