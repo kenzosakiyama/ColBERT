@@ -6,6 +6,7 @@ import torch.nn as nn
 import numpy as np
 
 from transformers import AdamW
+from transformers import get_linear_schedule_with_warmup
 from colbert.utils.runs import Run
 from colbert.utils.amp import MixedPrecisionManager
 
@@ -74,6 +75,8 @@ def train(args):
                                                             find_unused_parameters=True)
 
     optimizer = AdamW(filter(lambda p: p.requires_grad, colbert.parameters()), lr=args.lr, eps=1e-8)
+    scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=args.warmupsteps, num_training_steps=args.maxsteps)
+
     optimizer.zero_grad()
 
     amp = MixedPrecisionManager(args.amp)
@@ -109,6 +112,7 @@ def train(args):
             this_batch_loss += loss.item()
 
         amp.step(colbert, optimizer)
+        scheduler.step()
 
         if args.rank < 1:
             avg_loss = train_loss / (batch_idx+1)
